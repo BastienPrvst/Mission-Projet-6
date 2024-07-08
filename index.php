@@ -10,13 +10,32 @@ $action = Utils::request('action', 'home');
 try {
 // Pour chaque action, on appelle le bon contrôleur et la bonne méthode.
     switch ($action) {
-        // Pages accessibles à tous.
+        // Pages BookController.
         case 'home':
-            $bookController = new BookController();
-            $bookController->showHome();
+            (new BookController())->showHome();
             break;
-
-
+        case 'bookList':
+            (new BookController())->showBookList();
+            break;
+        case 'bookDetail':
+            (new BookController())->showBookDetail();
+            break;
+        case 'addBook':
+            (new BookController())->addBook();
+            break;
+        // Pages User Controller
+        case 'register':
+            (new UserController())->registerPage();
+            break;
+        case 'login' :
+            (new UserController())->loginPage();
+            break;
+        case 'personnalProfile' :
+            (new UserController())->showPersonalProfile();
+            break;
+        case 'userProfile' :
+            (new UserController())->showUserProfile();
+            break;
         default:
             throw new Exception("La page demandée n'existe pas.");
     }

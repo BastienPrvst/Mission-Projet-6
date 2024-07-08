@@ -24,11 +24,13 @@ class UserController
 
     public function showPersonalProfile() : void
     {
-
+        $view = new View("Mon profil");
+        $view->render('personalProfile');
     }
 
     public function showUserProfile() : void
     {
-
+        $view = new View("Profil d'utilisateur");
+        $view->render('userProfile');
     }
 }

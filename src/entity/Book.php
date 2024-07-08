@@ -96,7 +96,4 @@ class Book
     {
         $this->statut = $statut;
     }
-
-
-
 }

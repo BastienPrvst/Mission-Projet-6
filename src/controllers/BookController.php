@@ -22,7 +22,8 @@ class BookController{
 
     public function addBook() : void
     {
-
+        $view = new View("Ajouter un livre");
+        $view->render('addBook');
     }
 
     public function deleteBook() : void
