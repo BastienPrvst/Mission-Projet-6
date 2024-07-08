@@ -9,17 +9,17 @@ $action = Utils::request('action', 'home');
 // Try catch global pour gérer les erreurs
 try {
 // Pour chaque action, on appelle le bon contrôleur et la bonne méthode.
-switch ($action) {
-// Pages accessibles à tous.
-case 'home':
-$articleController = new ArticleController();
-$articleController->showHome();
-break;
+    switch ($action) {
+        // Pages accessibles à tous.
+        case 'home':
+            $bookController = new BookController();
+            $bookController->showHome();
+            break;
 
 
-default:
-throw new Exception("La page demandée n'existe pas.");
-}
+        default:
+            throw new Exception("La page demandée n'existe pas.");
+    }
 } catch (Exception $e) {
 // En cas d'erreur, on affiche la page d'erreur.
 $errorView = new View('Erreur');

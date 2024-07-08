@@ -9,7 +9,12 @@ class User
     private string $email;
     private string $avatar;
 
-    public function __construct(int $id, string $pseudo, string $password, string $email){
+    public function __construct
+    (int $id,
+     string $pseudo,
+     string $password,
+     string $email)
+    {
         $this->id = $id;
         $this->pseudo = $pseudo;
         $this->password = $password;

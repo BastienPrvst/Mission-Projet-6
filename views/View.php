@@ -18,12 +18,13 @@ class View
     {
         $this->title = $title;
     }
-    
+
     /**
-     * Cette méthode retourne une page complète. 
-     * @param string $viewPath : le chemin de la vue demandée par le controlleur. 
+     * Cette méthode retourne une page complète.
+     * @param string $viewPath : le chemin de la vue demandée par le controlleur.
      * @param array $params : les paramètres que le controlleur a envoyé à la vue.
      * @return string
+     * @throws Exception
      */
     public function render(string $viewName, array $params = []) : void 
     {
