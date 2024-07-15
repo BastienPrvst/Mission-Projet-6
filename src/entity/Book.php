@@ -87,7 +87,7 @@ class Book
         $this->image = $image;
     }
 
-    public function isStatut(): bool
+    public function getStatut(): bool
     {
         return $this->statut;
     }

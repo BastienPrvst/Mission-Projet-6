@@ -5,7 +5,7 @@
  */
 abstract class AbstractEntityManager {
     
-    protected $db;
+    protected DBManager $db;
 
     /**
      * Constructeur de la classe.

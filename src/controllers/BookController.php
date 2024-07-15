@@ -2,16 +2,24 @@
 
 class BookController{
 
+    /**
+     * @throws Exception
+     */
     public function showHome() : void
     {
+        $lastBooks = (new BookRepository())->findLastBooks();
         $view = new View("Accueil");
-        $view->render('home');
+        $view->render("home",
+            ['lastBooks' => $lastBooks]);
     }
 
-    public function showBookList() : void
+    public function showBookList(?int $limit = 10000) : void
     {
+        $allBooks = (new BookRepository())->findBooks($limit);
         $view = new View("Nos livres à l'échange");
-        $view->render('bookList');
+        $view->render('bookList',
+            ['books' => $allBooks]
+        );
     }
 
     public function showBookDetail() : void

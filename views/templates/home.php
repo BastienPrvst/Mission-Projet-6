@@ -5,7 +5,12 @@
 
     <p>Donnez une nouvelle vie à vos livres en les échangeant avec d'autres amoureux de la lecture. Nous croyons en la magie du partage de connaissances et d'histoires à travers les livres. </p>
 
-    <button class="simple-button">Découvrir</button>
+    <button class="simple-button"><a href="index.php?action=bookList">Découvrir</a></button>
+    <figure>
+        <img src="img/men_reading.jpg" alt="Un homme lisant entouré de livres.">
+        <figcaption>Hamza</figcaption>
+    </figure>
+    
 </section>
 
 <section>
@@ -13,9 +18,24 @@
     <h2>Les derniers livres ajoutés</h2>
 
 
-    <?//TODO : Mettre les 4 derniers livres ajoutés?>
+    <?php foreach ($lastBooks as $lastBook):?>
+        <div class="info-books">
+            <?=$lastBook['title'];?>
 
-    <button class="simple-button">Voir tous les livres</button>
+            <?= $lastBook['author'];?>
+
+            <?= $lastBook['description'];?>
+
+            <?= $lastBook['statut'];?>
+
+            <?= $lastBook['pseudo'];?>
+
+
+        </div>
+
+    <?php endforeach; ?>
+
+    <button class="simple-button"><a href="index.php?action=bookList">Voir tous les livres</a></button>
 
 </section>
 
@@ -43,12 +63,12 @@
         </div>
     </div>
 
-    <button class="simple-button">Voir tous les livres</button>
+    <button class="simple-button"><a href="index.php?action=bookList">Voir tous les livres</a></button>
 
 </section>
 
 <div>
-    <img src="#" alt="Image bannière">
+    <img src="img/page_banner.jpg" alt="Image bannière">
 </div>
 
 <section>
@@ -61,5 +81,5 @@
     <br>
     <p>L’équipe Tom Troc</p>
 
-    <img src="#" alt="Image keur">
+    <img src="img/heart.png" alt="Image keur">
 </section>

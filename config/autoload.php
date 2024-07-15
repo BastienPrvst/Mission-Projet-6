@@ -17,6 +17,16 @@ spl_autoload_register(function($className) {
         require_once 'models/' . $className . '.php';
     }
 
+    //J'ajoute ceci pour trouver mes repository
+    if (file_exists('src/repository/' . $className . '.php' )){
+        require_once 'src/repository/' . $className . '.php';
+    }
+
+    //Et pour les entités
+    if (file_exists('src/entity/' . $className . '.php' )){
+        require_once 'src/entity/' . $className . '.php';
+    }
+
     // On va voir dans le dossier Controller si la classe existe.
     if (file_exists('src/controllers/' . $className . '.php')) {
         require_once 'src/controllers/' . $className . '.php';
@@ -26,5 +36,4 @@ spl_autoload_register(function($className) {
     if (file_exists('views/' . $className . '.php')) {
         require_once 'views/' . $className . '.php';
     }
-    
 });
