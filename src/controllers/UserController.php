@@ -3,18 +3,34 @@
 class UserController
 {
 
-    public function registerPage() : void
+    public function registerForm() : void
     {
 
         $view = new View("S'inscrire");
-        $view->render('register');
+        $view->render('registerForm');
+
+    }
+
+    public function registerUser() : void
+    {
+        $pseudo = Utils::request("pseudo");
+        $email = Utils::request("email");
+        $password = Utils::request("password");
+        try {
+            $result = (new UserRepository())->createUser($pseudo, $email, $password);
+            echo '<pre>';
+            var_dump($result);
+            echo '</pre>';
+        }catch (Exception $e){
+            echo $e->getMessage();
+        }
 
     }
 
     public function logInPage() : void
     {
         $view = new View("Connexion");
-        $view->render('login');
+        $view->render('loginForm');
     }
 
     public function logOut() : void

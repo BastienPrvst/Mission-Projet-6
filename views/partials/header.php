@@ -11,7 +11,7 @@
                 echo '<li><a href="index.php?action=personnalProfile">Mon compte</a></li>';
                 }
                 ?>
-                <li><a href="index.php?action=login">Connexion</a></li>
+                <li><a href="index.php?action=loginForm">Connexion</a></li>
             </ul>
         </div>
     </nav>

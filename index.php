@@ -24,11 +24,14 @@ try {
             (new BookController())->addBook();
             break;
         // Pages User Controller
-        case 'register':
-            (new UserController())->registerPage();
+        case 'registerForm':
+            (new UserController())->registerForm();
             break;
-        case 'login' :
-            (new UserController())->loginPage();
+        case 'registerUser':
+            (new UserController())->registerUser();
+            break;
+        case 'loginForm' :
+            (new UserController())->logInPage();
             break;
         case 'personnalProfile' :
             (new UserController())->showPersonalProfile();
