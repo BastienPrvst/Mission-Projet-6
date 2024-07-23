@@ -1,41 +1,29 @@
 <?php
 
-class User
+class User extends AbstractEntity
 
 {
-    private int $id;
+    private int $idUser;
     private string $pseudo;
     private string $password;
     private string $email;
-    private string $avatar;
-
-    public function __construct
-    (int $id,
-     string $pseudo,
-     string $password,
-     string $email)
-    {
-        $this->id = $id;
-        $this->pseudo = $pseudo;
-        $this->password = $password;
-        $this->email = $email;
-    }
+    private ?string $avatar = null;
 
 
     /**
      * @return int
      */
-    public function getId(): int
+    public function getIdUser(): int
     {
-        return $this->id;
+        return $this->idUser;
     }
 
     /**
-     * @param int $id
+     * @param int $idUser
      */
-    public function setId(int $id): void
+    public function setIdUser(int $idUser): void
     {
-        $this->id = $id;
+        $this->idUser = $idUser;
     }
 
     public function getEmail(): string
@@ -68,12 +56,12 @@ class User
         $this->password = $password;
     }
 
-    public function getAvatar(): string
+    public function getAvatar(): ?string
     {
         return $this->avatar;
     }
 
-    public function setAvatar(string $avatar): void
+    public function setAvatar(?string $avatar): void
     {
         $this->avatar = $avatar;
     }

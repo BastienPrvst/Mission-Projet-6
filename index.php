@@ -33,6 +33,12 @@ try {
         case 'loginForm' :
             (new UserController())->logInPage();
             break;
+        case 'loginUser' :
+            (new UserController())->logInUser();
+            break;
+        case 'logout' :
+            (new UserController())->logOut();
+            break;
         case 'personnalProfile' :
             (new UserController())->showPersonalProfile();
             break;

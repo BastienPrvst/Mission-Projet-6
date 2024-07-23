@@ -63,4 +63,29 @@ class UserRepository extends AbstractEntityManager
 
     }
 
+    public function connectUser(string $email, string $password): User|false
+    {
+        $checkSQL = <<<EOD
+        SELECT *
+        FROM users
+        WHERE email = '$email'
+        EOD;
+
+        $result = $this->db->query($checkSQL);
+
+        while ($user = $result->fetch()) {
+            $newUser = new User($user);
+            $passwordToTest = $newUser->getPassword();
+            if (password_verify($password, $passwordToTest)){
+                return $newUser;
+            }
+
+            return false;
+        };
+
+        return false;
+
+    }
+
+
 }

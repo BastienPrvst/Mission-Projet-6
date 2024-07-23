@@ -13,6 +13,14 @@
     </form>
 </div>
 
+<?php
+if (!empty($errors)) {
+    foreach ($errors as $error) { ?>
+        <p> <?=$error ?> </p>
+    <?php }
+}
+?>
+
 <div class="accountless">
     Deja inscrit ? <a href="index.php?action=loginForm">Connectez-vous</a>
 </div>
