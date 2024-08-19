@@ -3,7 +3,7 @@
 class User extends AbstractEntity
 
 {
-    private int $idUser;
+    protected int $id;
     private string $pseudo;
     private string $password;
     private string $email;
@@ -13,17 +13,17 @@ class User extends AbstractEntity
     /**
      * @return int
      */
-    public function getIdUser(): int
+    public function getId(): int
     {
-        return $this->idUser;
+        return $this->id;
     }
 
     /**
-     * @param int $idUser
+     * @param int $id
      */
-    public function setIdUser(int $idUser): void
+    public function setId(int $id): void
     {
-        $this->idUser = $idUser;
+        $this->id = $id;
     }
 
     public function getEmail(): string

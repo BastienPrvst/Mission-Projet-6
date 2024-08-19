@@ -39,11 +39,14 @@ try {
         case 'logout' :
             (new UserController())->logOut();
             break;
-        case 'personnalProfile' :
+        case 'personalProfile' :
             (new UserController())->showPersonalProfile();
             break;
         case 'userProfile' :
             (new UserController())->showUserProfile();
+            break;
+        case 'modifyProfile' :
+            (new UserController())->modifiyUserInfo();
             break;
         default:
             throw new Exception("La page demandée n'existe pas.");

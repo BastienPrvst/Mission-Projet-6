@@ -13,11 +13,15 @@ class UserController
 
     public function registerUser() : void
     {
-        $pseudo = Utils::request("pseudo");
-        $email = Utils::request("email");
+        $pseudo = Utils::request("register-pseudo");
+        $email = Utils::request("register-email");
         $password = Utils::request("password");
 
-        $result = (new UserRepository())->createUser($pseudo, $email, $password);
+        $user = new User();
+        $user->setPseudo((string)$pseudo);
+        $user->setEmail($email);
+
+        $result = (new UserRepository())->createUser($user, $password);
 
         if ($result){
             $view = new View("S'inscrire");
@@ -54,14 +58,16 @@ class UserController
         //Si aucun utilisateur avec ce mail ou mdp incorrect
         if (!$user){
             throw new Exception('Le mot de passe ou l\'adresse email est invalide');
+
         }
 
         // On connecte l'utilisateur.
-        $_SESSION['user'] = $user;
-        $_SESSION['idUser'] = $user->getId();
-        $_SESSION['pseudo'] = $user->getPseudo();
-        $_SESSION['email'] = $user->getEmail();
-        $_SESSION['avatar'] = $user->getAvatar() ? : null;
+        $_SESSION['user'] = [
+            'id' => $user->getId(),
+            'email' => $user->getEmail(),
+            'pseudo' => $user->getPseudo(),
+            'avatar' => $user->getAvatar(),
+        ];
 
         Utils::redirect("home");
     }
@@ -69,18 +75,39 @@ class UserController
     public function logOut() : void
     {
         unset($_SESSION['user']);
-        unset($_SESSION['idUser']);
-        unset($_SESSION['pseudo']);
-        unset($_SESSION['email']);
-        unset($_SESSION['avatar']);
 
         Utils::redirect("home");
     }
 
     public function showPersonalProfile() : void
     {
+        if (!isset($_SESSION['user'])){
+            Utils::redirect("home");
+        }
+
         $view = new View("Mon profil");
         $view->render('personalProfile');
+    }
+
+    public function modifiyUserInfo() : void
+    {
+        //Données du form
+        $pseudo = Utils::request("user-pseudo");
+        $email = Utils::request("user-email");
+        $password = Utils::request("password");
+
+        //Instanciation d'un USER avec les données de la session
+        $user = new User();
+        $user->setPseudo($_SESSION['user']['pseudo']);
+        $user->setEmail($_SESSION['user']['email']);
+        $user->setId($_SESSION['user']['id']);
+        $user->setAvatar($_SESSION['user']['avatar']);
+
+        (new UserRepository())->updateUser($user, $pseudo, $email, $password);
+
+        $view = new View("Mon profil");
+        $view->render('personalProfile');
+
     }
 
     public function showUserProfile() : void

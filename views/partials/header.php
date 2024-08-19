@@ -8,7 +8,7 @@
                 <li><a href="index.php?action=bookList">Nos livres à l'échange</a></li>
                 <?php if (isset($_SESSION['user'])) {
                 echo '<li><a href="#">Messagerie</a></li>';
-                echo '<li><a href="index.php?action=personnalProfile">Mon compte</a></li>';
+                echo '<li><a href="index.php?action=personalProfile">Mon compte</a></li>';
                 echo '<li><a href="index.php?action=logout">Déconnexion</a></li>';
                 }else{
                     echo '<li><a href="index.php?action=loginForm">Connexion</a></li>';
