@@ -36,5 +36,13 @@
         <input type="submit" value="Enregistrer">
     </form>
 
+    <?php
+    if (!empty($errors)) {
+        foreach ($errors as $error) { ?>
+            <p> <?=$error ?> </p>
+        <?php }
+    }
+    ?>
+
 
 </section>

@@ -17,11 +17,7 @@ class UserController
         $email = Utils::request("register-email");
         $password = Utils::request("password");
 
-        $user = new User();
-        $user->setPseudo((string)$pseudo);
-        $user->setEmail($email);
-
-        $result = (new UserRepository())->createUser($user, $password);
+        $result = (new UserRepository())->createUser($pseudo,$email ,$password);
 
         if ($result){
             $view = new View("S'inscrire");
@@ -57,8 +53,8 @@ class UserController
 
         //Si aucun utilisateur avec ce mail ou mdp incorrect
         if (!$user){
-            throw new Exception('Le mot de passe ou l\'adresse email est invalide');
-
+            $view = new View("Connexion");
+            $view->render('loginForm');
         }
 
         // On connecte l'utilisateur.
@@ -103,10 +99,17 @@ class UserController
         $user->setId($_SESSION['user']['id']);
         $user->setAvatar($_SESSION['user']['avatar']);
 
-        (new UserRepository())->updateUser($user, $pseudo, $email, $password);
+        $result = (new UserRepository())->updateUser($user, $pseudo, $email, $password);
 
-        $view = new View("Mon profil");
-        $view->render('personalProfile');
+        if ($result){
+            $view = new View("Mon profil");
+            $view->render('personalProfile',
+                ['errors' => $result]);
+        }else{
+            $view = new View("Mon profil");
+            $view->render('personalProfile',
+            ['success' => true]);
+        }
 
     }
 
