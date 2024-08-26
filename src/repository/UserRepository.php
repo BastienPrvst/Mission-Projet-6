@@ -177,4 +177,82 @@ class UserRepository extends AbstractEntityManager
         return $this->db->query($pseudoSql, ['pseudo' => $pseudo])->rowCount() > 0;
     }
 
+    public function updateAvatar(User $user) : array| null
+    {
+        //On met le vrai MIMETYPE
+        $_FILES['picture']['type'] = finfo_file(finfo_open(FILEINFO_MIME_TYPE), $_FILES['picture']['tmp_name']);
+
+        if ($_FILES['picture']['type'] !== 'image/jpeg' && ($_FILES['picture']['type'] !== ('image/png')) && $_FILES['picture']['type'] !== 'image/jpg'){
+
+            $errorMessages[] = 'Le type de fichier n\'est pas valide';
+            return $errorMessages;
+        }
+
+        if (isset($_FILES['file']) && $_FILES['file']['error'] !== UPLOAD_ERR_OK) {
+            $error = $_FILES['file']['error'];
+            $errorMessages = [];
+
+            if ($error === UPLOAD_ERR_INI_SIZE) {
+                $errorMessages[] = "Le fichier dépasse la taille maximale autorisée par upload_max_filesize dans php.ini.";
+            }
+
+            if ($error === UPLOAD_ERR_FORM_SIZE) {
+                $errorMessages[] = "Le fichier dépasse la taille maximale autorisée par le formulaire HTML.";
+            }
+
+            if ($error === UPLOAD_ERR_PARTIAL) {
+                $errorMessages[] = "Le fichier n'a été que partiellement téléchargé.";
+            }
+
+            if ($error === UPLOAD_ERR_NO_FILE) {
+                $errorMessages[] = "Aucun fichier n'a été téléchargé.";
+            }
+
+            if ($error === UPLOAD_ERR_NO_TMP_DIR) {
+                $errorMessages[] = "Le dossier temporaire est manquant.";
+            }
+
+            if ($error === UPLOAD_ERR_CANT_WRITE) {
+                $errorMessages[] = "Échec de l'écriture du fichier sur le disque.";
+            }
+
+            if ($error === UPLOAD_ERR_EXTENSION) {
+                $errorMessages[] = "Une extension PHP a arrêté le téléchargement du fichier.";
+            }
+        }
+
+        if (!empty($errorMessages)){
+            return $errorMessages;
+        }
+
+        if ($_FILES['picture']['type'] === 'image/jpeg' || $_FILES['picture']['type'] === 'image/jpg')
+        {   $type = '.jpeg';
+        }else{
+            $type = '.png';
+        }
+
+        //On sauvegarde l'image dans notre dossier d'image
+        $userId = $user->getId();
+        $uploadDir = dirname(__DIR__, 2) . '/users_img/';
+        $newName = 'user' . $userId . $type;
+        move_uploaded_file($_FILES['picture']['tmp_name'], $uploadDir . $newName);
+
+        //On set le nom en bdd (au moins pour la premiere fois)
+        $query = <<<EOD
+                UPDATE users
+                SET avatar = '$newName'
+                WHERE id = '$userId';
+        EOD;
+        $this->db->query($query);
+
+        //Maj de _SESSION
+        $_SESSION['user']['avatar'] = $newName;
+
+        unset($_FILES);
+
+        return null;
+    }
+
+
+
 }

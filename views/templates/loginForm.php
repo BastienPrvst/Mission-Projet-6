@@ -14,6 +14,14 @@
         <input type="submit" value="Se connecter">
     </form>
 </div>
+<?php
+    if (isset($_GET['error'])) {
+        echo '<p class="error">' . $_GET['error'] . '</p>';
+    }
+    if (isset($_GET['success'])) {
+        echo '<p class="success">' . $_GET['success'] . '</p>';
+    }
+?>
 
 <div class="accountless">
     Pas encore de compte ? <a href="index.php?action=registerForm">Inscrivez-vous</a>

@@ -5,8 +5,8 @@
 <section class="first-profile-section">
     <div class="personal-image">
         <?php
-        if (isset($_SESSION['avatar'])) { ?>
-
+        if (isset($_SESSION['user']['avatar'])) { ?>
+            <img src="users_img/<?=htmlentities($_SESSION['user']['avatar'])?>" alt="test">
         <?php
         }else{ ?>
             <img src="img/default_image.png" alt="Image par défaut du site Tom Troc">
@@ -14,7 +14,18 @@
         }
         ?>
 
-        <a href="#">Modifier</a>
+        <form action="index.php?action=modifyAvatar" method="POST" enctype="multipart/form-data">
+
+            <!-- Champ caché indiquant la taille maximum autorisée pour le fichier -->
+            <input type="hidden" name="MAX_FILE_SIZE" value="2048000">
+
+            <!-- Champ du fichier, n'acceptant que les fichiers jpg et png -->
+            <input type="file" name="picture" accept="image/jpeg, image/png">
+
+            <input type="submit">
+
+        </form>
+
     </div>
 </section>
 

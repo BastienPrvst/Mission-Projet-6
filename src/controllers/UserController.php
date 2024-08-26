@@ -20,15 +20,12 @@ class UserController
         $result = (new UserRepository())->createUser($pseudo,$email ,$password);
 
         if ($result){
-            $view = new View("S'inscrire");
-            $view->render('registerForm',
-                ['errors' => $result]);
+            Utils::redirect('registerForm',
+            ['errors' => $result]);
         }else{
-            $view = new View("Connexion");
-            $view->render('loginForm',
-                ['success' => true]);
+            Utils::redirect('loginForm',
+                ['success' => 'Votre compte à bien été crée']);
         }
-
     }
 
     public function logInPage() : void
@@ -52,9 +49,9 @@ class UserController
         $user = (new UserRepository())->connectUser($email, $password);
 
         //Si aucun utilisateur avec ce mail ou mdp incorrect
-        if (!$user){
-            $view = new View("Connexion");
-            $view->render('loginForm');
+        if ($user === false){
+            Utils::redirect("loginForm",
+                ['error' => 'Le pseudo et/ou le mot de passe est incorrect' ]);
         }
 
         // On connecte l'utilisateur.
@@ -65,7 +62,7 @@ class UserController
             'avatar' => $user->getAvatar(),
         ];
 
-        Utils::redirect("home");
+        Utils::redirect("personalProfile");
     }
 
     public function logOut() : void
@@ -108,8 +105,30 @@ class UserController
         }else{
             $view = new View("Mon profil");
             $view->render('personalProfile',
-            ['success' => true]);
+                ['success' => true]);
         }
+
+    }
+
+    public function modifyAvatar() : void
+    {
+        $user = new User();
+        $user->setPseudo($_SESSION['user']['pseudo']);
+        $user->setEmail($_SESSION['user']['email']);
+        $user->setId($_SESSION['user']['id']);
+        $user->setAvatar($_SESSION['user']['avatar']);
+
+        $errors = (new UserRepository())->updateAvatar($user);
+
+        if (!empty($errors)){
+            $view = new View("Mon profil");
+            $view->render('personalProfile',
+            ['errors' => $errors]);
+        }
+
+        $view = new View("Mon profil");
+        $view->render('personalProfile',
+            ['success' => true]);
 
     }
 
