@@ -126,9 +126,8 @@ class UserController
             ['errors' => $errors]);
         }
 
-        $view = new View("Mon profil");
-        $view->render('personalProfile',
-            ['success' => true]);
+        //Redirection si pas d'erreurs dans le formulaire
+        Utils::redirect("personalProfile");
 
     }
 

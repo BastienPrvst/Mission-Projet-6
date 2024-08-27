@@ -2,14 +2,290 @@
 
 body {
     font-family: 'Inter', sans-serif;
+    margin: auto;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
 }
 
 h1,
 h2,
 h3 {
     font-family: 'Playfair Display', sans-serif;
+    font-size: 2.5rem;
+    font-weight: lighter;
 }
 
 a {
     text-decoration: none;
 }
+
+.green-button {
+    background-color: #00AD6A;
+    border-radius: 10px;
+    border: none;
+    padding: 25px 45px;
+}
+
+.green-button a {
+    color: #FFFFFF;
+    font-size: 1.3rem;
+}
+
+/*Header*/
+
+header {
+    background-color: #F5F3EF;
+}
+
+nav,
+.nav-list,
+.nav-ul1,
+.nav-ul2
+{
+    display: flex;
+    align-items: center;
+}
+
+.nav-list {
+    width: 100%;
+}
+
+.nav-logo {
+    width: 170px;
+}
+
+.nav-ul2 {
+    margin-left: auto;
+}
+
+.nav-ul1 li,
+.nav-ul2 li
+{
+    list-style-type: none;
+    padding: 0 40px;
+}
+
+
+
+
+
+
+
+/*Page Home*/
+
+.home1 .container,
+.home2,
+.home3,
+.home4
+{
+    display: flex;
+}
+
+.home1, .home3{
+    padding-top: 100px;
+    background-color: #F5F3EF;
+}
+
+.sit-man {
+    width: 450px;
+    height: auto;
+}
+
+.container .part-1 {
+    font-size: 1rem;
+    padding: 200px 50px;
+    width: 400px;
+    margin: auto;
+}
+
+.home1 .part-1 p {
+    justify-content: center;
+    text-align: start;
+    padding-bottom: 20px;
+}
+
+/*-----------------------*/
+
+.home2 {
+    flex-direction: column;
+    padding: 200px 0 200px;
+    background-color: #FAF9F7;
+}
+
+.last-books {
+    text-align: center;
+}
+
+.center-button {
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.quator {
+    display: flex;
+    flex-direction: row;
+}
+
+.info-books {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    width: 230px;
+}
+
+.info-books .detail-books {
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-books {
+    padding: 10px 10px 20px;
+    border-radius: 10px;
+    min-height: 110px;
+    background-color: #FFFFFF;
+
+}
+
+.title {
+    font-size: 18px;
+    padding: 7px 0;
+}
+
+.author {
+    color: grey;
+    font-size: 16px;
+    padding-bottom: 13px;
+}
+
+.seller {
+    color: grey;
+    font-size: 14px;
+}
+
+.default-book {
+    max-width: 230px;
+}
+
+/*
+-----------------------------------------
+ */
+.home3 .container {
+    text-align: center;
+}
+
+.trade-books {
+    text-align: center;
+    width: 400px;
+    margin: 0 auto;
+    padding-bottom: 30px;
+}
+
+.quatro {
+    display: flex;
+    flex-direction: row;
+}
+
+.solo {
+    background-color: #FFFFFF;
+    padding: 15px;
+    margin: 20px;
+    height: 150px;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    border-radius: 15px;
+}
+
+.solo p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home3 .container .green-button {
+    background-color: transparent;
+    border: solid 2px #00AD6A;
+    margin-bottom: 100px;
+}
+
+.home3 .container .green-button a {
+    color: #00AD6A;
+}
+
+.banner {
+    width: 100%;
+}
+
+/*
+----------------------------------
+ */
+.home4 {
+    background-color: #FAF9F7;
+}
+
+.home4 .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.home4 .container p {
+    text-align: start;
+    margin: 0;
+}
+
+.center-div {
+    width: 450px;
+    margin: 0 auto;
+    padding-top: 50px;
+}
+
+.keur {
+    position: relative;
+    left: 200px
+}
+
+/*
+-----------Footer------------
+ */
+
+.logo-footer {
+    width: 30px;
+}
+
+footer {
+    width: 100%;
+}
+
+footer ul {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    justify-content: flex-end;
+}
+
+footer ul li {
+    padding: 10px 30px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -192,12 +192,8 @@ class UserRepository extends AbstractEntityManager
             $error = $_FILES['file']['error'];
             $errorMessages = [];
 
-            if ($error === UPLOAD_ERR_INI_SIZE) {
-                $errorMessages[] = "Le fichier dépasse la taille maximale autorisée par upload_max_filesize dans php.ini.";
-            }
-
-            if ($error === UPLOAD_ERR_FORM_SIZE) {
-                $errorMessages[] = "Le fichier dépasse la taille maximale autorisée par le formulaire HTML.";
+            if ($error === UPLOAD_ERR_INI_SIZE || $error === UPLOAD_ERR_FORM_SIZE){} {
+                $errorMessages[] = "Le fichier dépasse la taille maximale autorisée.";
             }
 
             if ($error === UPLOAD_ERR_PARTIAL) {
