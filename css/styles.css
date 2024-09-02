@@ -6,7 +6,7 @@ body {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1300px;
     margin: auto;
 }
 
@@ -16,10 +16,12 @@ h3 {
     font-family: 'Playfair Display', sans-serif;
     font-size: 2.5rem;
     font-weight: lighter;
+    margin: 0;
 }
 
 a {
     text-decoration: none;
+    color: black;
 }
 
 .green-button {
@@ -27,6 +29,7 @@ a {
     border-radius: 10px;
     border: none;
     padding: 25px 45px;
+    color: #FFFFFF;
 }
 
 .green-button a {
@@ -38,13 +41,13 @@ a {
 
 header {
     background-color: #F5F3EF;
+    padding: 10px 0;
 }
 
 nav,
 .nav-list,
 .nav-ul1,
-.nav-ul2
-{
+.nav-ul2 {
     display: flex;
     align-items: center;
 }
@@ -62,16 +65,10 @@ nav,
 }
 
 .nav-ul1 li,
-.nav-ul2 li
-{
+.nav-ul2 li {
     list-style-type: none;
     padding: 0 40px;
 }
-
-
-
-
-
 
 
 /*Page Home*/
@@ -79,12 +76,11 @@ nav,
 .home1 .container,
 .home2,
 .home3,
-.home4
-{
+.home4 {
     display: flex;
 }
 
-.home1, .home3{
+.home1, .home3 {
     padding-top: 100px;
     background-color: #F5F3EF;
 }
@@ -276,16 +272,141 @@ footer ul li {
 }
 
 
+/*
+----------Login/register----------------------
+ */
 
+.login-main {
+    display: flex;
+    flex-direction: row;
+    background-color: #FAF9F7;
+}
 
+.login-main section {
+    width: 50%;
+    height: max-content;
+}
 
+.login-1 {
+    position: relative;
+    left: 11%;
+    padding-top: 80px;
+}
 
+.connexion-form form{
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+}
 
+.connexion-form form input {
+    margin-bottom: 30px;
+}
 
+.connexion-form form label {
+    padding: 5px;
+    color: grey;
+    font-size: small;
+}
 
+.text-input {
+    height: 30px;
+    font-size: 20px;
+    border: solid 1px #F0F0F0;
+    border-radius: 10px;
+    padding: 5px;
+}
 
+.submit-button {
+    font-size: large;
+    cursor: pointer;
+}
 
+.login-2 img {
+    width: 100%;
+}
 
+/*
+----------------Profil-------
+ */
+.account {
+    margin-left: 9%;
+    padding-top: 50px;
+}
 
+.main-profil {
+    background-color: #FAF9F7;
+    height: max-content;
+}
 
+.flex-it {
+    display: flex;
+    flex-direction: row;
+    padding: 100px;
+    justify-content: space-around;
+}
 
+.flex-it section {
+    width: 40%;
+    padding: 30px;
+    background-color: #FFFFFF;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.personal-image {
+    width: 125px;
+    height: 125px;
+}
+
+.user-stats {
+    padding-top: 50px;
+    text-align: center;
+}
+
+.user-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.connexion-form form .green-button {
+    background-color: #F5F3EF;
+    border: solid 2px #00AD6A;
+    margin-bottom: 100px;
+    color: #00AD6A;
+    font-weight: bold;
+}
+
+.info-form form {
+    width: 100%;
+}
+
+.book-img {
+    width: 75px;
+}
+
+.user-books-table {
+    width: 100%;
+    margin: auto;
+    border-collapse: collapse;
+}
+
+.user-books-table tbody tr td {
+    text-align: center;
+    padding: 20px 0;
+    margin: 0 20px;
+    border: none;
+}
+
+.user-books-table tbody tr:nth-child(odd) {
+    background-color: #FAF9F7;
+}
+
+.user-books-table tbody tr:nth-child(even) {
+    background-color: #FFFFFF;
+}

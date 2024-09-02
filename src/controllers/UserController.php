@@ -78,8 +78,19 @@ class UserController
             Utils::redirect("home");
         }
 
+        $id = $_SESSION['user']['id'];
+
+        $user = (new UserRepository())->getUserById($id);
+
+        if ($user === null){
+            Utils::redirect('home');
+        }
+
+        $userBooks = (new BookRepository())->findBookByUser($user);
+
         $view = new View("Mon profil");
-        $view->render('personalProfile');
+        $view->render('personalProfile',
+        ['userBooks' => $userBooks]);
     }
 
     public function modifiyUserInfo() : void

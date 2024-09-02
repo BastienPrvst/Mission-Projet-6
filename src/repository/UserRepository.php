@@ -249,6 +249,28 @@ class UserRepository extends AbstractEntityManager
         return null;
     }
 
+    public function getUserById(int $id): ?User
+    {
+        $query = <<<EOD
+                SELECT *
+                FROM users
+                where id = $id;
+                EOD;
 
+        $result = $this->db->query($query)->fetch();
+
+        if ($result !== null){
+            $user = new User();
+            $user->setId($result['id']);
+            $user->setPseudo($result['pseudo']);
+            $user->setAvatar($result['avatar']);
+            $user->setEmail($result['email']);
+            return $user;
+        }
+
+        return null;
+
+
+    }
 
 }

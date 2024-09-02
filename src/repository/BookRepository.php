@@ -31,4 +31,18 @@ class BookRepository extends AbstractEntityManager
         return $this->findBooks(4);
     }
 
+    public function findBookByUser(User $user) : array
+    {
+        $id = $user->getId();
+
+        $sql = <<<EOD
+                SELECT *
+                FROM books
+                Where user_id = $id
+                EOD;
+
+        return $this->db->query($sql)->fetchAll();
+
+    }
+
 }
