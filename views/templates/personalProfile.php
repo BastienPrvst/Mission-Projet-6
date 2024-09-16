@@ -74,6 +74,10 @@
     </div>
 
     <section class="user-books">
+
+        <a href="index.php?action=addBookForm"><button>Ajouter un livre </button></a>
+
+
         <?php if (!empty($userBooks))
         { ?>
             <table class="user-books-table">
@@ -92,11 +96,11 @@
                     <?php
                     foreach ($userBooks as $book) {?>
                         <tr>
-                            <td><img class="book-img" src="img/default_image.png" alt=""></td>
-                            <td><?= $book["title"]?></td>
-                            <td><?= $book['author']?></td>
-                            <td><?= $book['description']?></td>
-                            <td><?= $book['statut']?></td>
+                            <td><img class="book-img" src="img_books/<?= htmlentities($book['image'])?>" alt=""></td>
+                            <td><?= htmlentities($book["title"])?></td>
+                            <td><?= htmlentities($book['author'])?></td>
+                            <td><?= htmlentities($book['description'])?></td>
+                            <td><?= htmlentities($book['statut'])?></td>
                             <td>Modifier | Supprimer</td>
 
                         </tr>

@@ -2,30 +2,13 @@
 
 class Book
 {
-
     private int  $id;
     private int $userId;
     private string $title;
     private string $description;
     private string $author;
-    private string $image;
+    private ?string $image;
     private bool $statut;
-
-    public function __construct
-    (int $id,
-     int $userId,
-     string $title,
-     string $description,
-     string $author,
-     string $image)
-    {
-        $this->id = $id;
-        $this->userId = $userId;
-        $this->title = $title;
-        $this->description = $description;
-        $this->author = $author;
-        $this->image = $image;
-    }
 
     public function getId(): int
     {
@@ -77,12 +60,12 @@ class Book
         $this->author = $author;
     }
 
-    public function getImage(): string
+    public function getImage(): ?string
     {
         return $this->image;
     }
 
-    public function setImage(string $image): void
+    public function setImage(?string $image): void
     {
         $this->image = $image;
     }

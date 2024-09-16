@@ -1,75 +1,79 @@
 /*Modifications générales*/
 
 body {
-    font-family: 'Inter', sans-serif;
-    margin: auto;
+  font-family: "Inter", sans-serif;
+  margin: auto;
+  background-color: #faf9f7;
+}
+
+* {
+  font-family: "Inter", sans-serif;
 }
 
 .container {
-    max-width: 1300px;
-    margin: auto;
+  max-width: 1300px;
+  margin: auto;
 }
 
 h1,
 h2,
 h3 {
-    font-family: 'Playfair Display', sans-serif;
-    font-size: 2.5rem;
-    font-weight: lighter;
-    margin: 0;
+  font-family: "Playfair Display", sans-serif;
+  font-size: 2.5rem;
+  font-weight: lighter;
+  margin: 0;
 }
 
 a {
-    text-decoration: none;
-    color: black;
+  text-decoration: none;
+  color: black;
 }
 
 .green-button {
-    background-color: #00AD6A;
-    border-radius: 10px;
-    border: none;
-    padding: 25px 45px;
-    color: #FFFFFF;
+  background-color: #00ad6a;
+  border-radius: 10px;
+  border: none;
+  padding: 25px 45px;
+  color: #ffffff;
 }
 
 .green-button a {
-    color: #FFFFFF;
-    font-size: 1.3rem;
+  color: #ffffff;
+  font-size: 1.3rem;
 }
 
 /*Header*/
 
 header {
-    background-color: #F5F3EF;
-    padding: 10px 0;
+  background-color: #f5f3ef;
+  padding: 10px 0;
 }
 
 nav,
 .nav-list,
 .nav-ul1,
 .nav-ul2 {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .nav-list {
-    width: 100%;
+  width: 100%;
 }
 
 .nav-logo {
-    width: 170px;
+  width: 170px;
 }
 
 .nav-ul2 {
-    margin-left: auto;
+  margin-left: auto;
 }
 
 .nav-ul1 li,
 .nav-ul2 li {
-    list-style-type: none;
-    padding: 0 40px;
+  list-style-type: none;
+  padding: 0 40px;
 }
-
 
 /*Page Home*/
 
@@ -77,175 +81,174 @@ nav,
 .home2,
 .home3,
 .home4 {
-    display: flex;
+  display: flex;
 }
 
-.home1, .home3 {
-    padding-top: 100px;
-    background-color: #F5F3EF;
+.home1,
+.home3 {
+  padding-top: 100px;
+  background-color: #f5f3ef;
 }
 
 .sit-man {
-    width: 450px;
-    height: auto;
+  width: 450px;
+  height: auto;
 }
 
 .container .part-1 {
-    font-size: 1rem;
-    padding: 200px 50px;
-    width: 400px;
-    margin: auto;
+  font-size: 1rem;
+  padding: 200px 50px;
+  width: 400px;
+  margin: auto;
 }
 
 .home1 .part-1 p {
-    justify-content: center;
-    text-align: start;
-    padding-bottom: 20px;
+  justify-content: center;
+  text-align: start;
+  padding-bottom: 20px;
 }
 
 /*-----------------------*/
 
 .home2 {
-    flex-direction: column;
-    padding: 200px 0 200px;
-    background-color: #FAF9F7;
+  flex-direction: column;
+  padding: 200px 0 200px;
+  background-color: #faf9f7;
 }
 
 .last-books {
-    text-align: center;
+  text-align: center;
 }
 
 .center-button {
-    display: block;
-    margin: 20px auto;
-    text-align: center;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
 }
 
 .quator {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .info-books {
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    width: 230px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  width: 230px;
 }
 
 .info-books .detail-books {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .detail-books {
-    padding: 10px 10px 20px;
-    border-radius: 10px;
-    min-height: 110px;
-    background-color: #FFFFFF;
-
+  padding: 10px 10px 20px;
+  border-radius: 10px;
+  min-height: 110px;
+  background-color: #ffffff;
 }
 
 .title {
-    font-size: 18px;
-    padding: 7px 0;
+  font-size: 18px;
+  padding: 7px 0;
 }
 
 .author {
-    color: grey;
-    font-size: 16px;
-    padding-bottom: 13px;
+  color: grey;
+  font-size: 16px;
+  padding-bottom: 13px;
 }
 
 .seller {
-    color: grey;
-    font-size: 14px;
+  color: grey;
+  font-size: 14px;
 }
 
 .default-book {
-    max-width: 230px;
+  max-width: 230px;
 }
 
 /*
 -----------------------------------------
  */
 .home3 .container {
-    text-align: center;
+  text-align: center;
 }
 
 .trade-books {
-    text-align: center;
-    width: 400px;
-    margin: 0 auto;
-    padding-bottom: 30px;
+  text-align: center;
+  width: 400px;
+  margin: 0 auto;
+  padding-bottom: 30px;
 }
 
 .quatro {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .solo {
-    background-color: #FFFFFF;
-    padding: 15px;
-    margin: 20px;
-    height: 150px;
-    width: 200px;
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    border-radius: 15px;
+  background-color: #ffffff;
+  padding: 15px;
+  margin: 20px;
+  height: 150px;
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  border-radius: 15px;
 }
 
 .solo p {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .home3 .container .green-button {
-    background-color: transparent;
-    border: solid 2px #00AD6A;
-    margin-bottom: 100px;
+  background-color: transparent;
+  border: solid 2px #00ad6a;
+  margin-bottom: 100px;
 }
 
 .home3 .container .green-button a {
-    color: #00AD6A;
+  color: #00ad6a;
 }
 
 .banner {
-    width: 100%;
+  width: 100%;
 }
 
 /*
 ----------------------------------
  */
 .home4 {
-    background-color: #FAF9F7;
+  background-color: #faf9f7;
 }
 
 .home4 .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .home4 .container p {
-    text-align: start;
-    margin: 0;
+  text-align: start;
+  margin: 0;
 }
 
 .center-div {
-    width: 450px;
-    margin: 0 auto;
-    padding-top: 50px;
+  width: 450px;
+  margin: 0 auto;
+  padding-top: 50px;
 }
 
 .keur {
-    position: relative;
-    left: 200px
+  position: relative;
+  left: 200px;
 }
 
 /*
@@ -253,160 +256,245 @@ nav,
  */
 
 .logo-footer {
-    width: 30px;
+  width: 30px;
 }
 
 footer {
-    width: 100%;
+  width: 100%;
 }
 
 footer ul {
-    display: flex;
-    flex-direction: row;
-    list-style: none;
-    justify-content: flex-end;
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  justify-content: flex-end;
 }
 
 footer ul li {
-    padding: 10px 30px;
+  padding: 10px 30px;
 }
-
 
 /*
 ----------Login/register----------------------
  */
 
 .login-main {
-    display: flex;
-    flex-direction: row;
-    background-color: #FAF9F7;
+  display: flex;
+  flex-direction: row;
+  background-color: #faf9f7;
 }
 
 .login-main section {
-    width: 50%;
-    height: max-content;
+  width: 50%;
+  height: max-content;
 }
 
 .login-1 {
-    position: relative;
-    left: 11%;
-    padding-top: 80px;
+  position: relative;
+  left: 11%;
+  padding-top: 80px;
 }
 
-.connexion-form form{
-    display: flex;
-    flex-direction: column;
-    width: 40%;
+.connexion-form form {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
 }
 
 .connexion-form form input {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 .connexion-form form label {
-    padding: 5px;
-    color: grey;
-    font-size: small;
+  padding: 5px;
+  color: grey;
+  font-size: small;
 }
 
 .text-input {
-    height: 30px;
-    font-size: 20px;
-    border: solid 1px #F0F0F0;
-    border-radius: 10px;
-    padding: 5px;
+  height: 35px;
+  font-size: 16px;
+  border: solid 1px #f0f0f0;
+  border-radius: 10px;
+  padding: 5px;
 }
 
 .submit-button {
-    font-size: large;
-    cursor: pointer;
+  font-size: large;
+  cursor: pointer;
 }
 
 .login-2 img {
-    width: 100%;
+  width: 100%;
 }
 
 /*
 ----------------Profil-------
  */
 .account {
-    margin-left: 9%;
-    padding-top: 50px;
+  margin-left: 9%;
+  padding-top: 50px;
 }
 
 .main-profil {
-    background-color: #FAF9F7;
-    height: max-content;
+  background-color: #faf9f7;
+  height: max-content;
 }
 
 .flex-it {
-    display: flex;
-    flex-direction: row;
-    padding: 100px;
-    justify-content: space-around;
+  display: flex;
+  flex-direction: row;
+  padding: 100px;
+  justify-content: space-around;
 }
 
 .flex-it section {
-    width: 40%;
-    padding: 30px;
-    background-color: #FFFFFF;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  width: 40%;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .personal-image {
-    width: 125px;
-    height: 125px;
+  width: 125px;
+  height: 125px;
 }
 
 .user-stats {
-    padding-top: 50px;
-    text-align: center;
+  margin-top: 50px;
+  text-align: center;
 }
 
 .user-img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .connexion-form form .green-button {
-    background-color: #F5F3EF;
-    border: solid 2px #00AD6A;
-    margin-bottom: 100px;
-    color: #00AD6A;
-    font-weight: bold;
+  background-color: #f5f3ef;
+  border: solid 2px #00ad6a;
+  margin-bottom: 100px;
+  color: #00ad6a;
+  font-weight: bold;
 }
 
 .info-form form {
-    width: 100%;
+  width: 100%;
 }
 
 .book-img {
-    width: 75px;
+  width: 75px;
+}
+
+.user-books {
+  padding: 130px;
 }
 
 .user-books-table {
-    width: 100%;
-    margin: auto;
-    border-collapse: collapse;
+  width: 100%;
+  margin: auto;
+  border-collapse: collapse;
 }
 
 .user-books-table tbody tr td {
-    text-align: center;
-    padding: 20px 0;
-    margin: 0 20px;
-    border: none;
+  text-align: center;
+  padding: 20px 0;
+  margin: 0 20px;
+  border: none;
 }
 
 .user-books-table tbody tr:nth-child(odd) {
-    background-color: #FAF9F7;
+  background-color: #faf9f7;
 }
 
 .user-books-table tbody tr:nth-child(even) {
-    background-color: #FFFFFF;
+  background-color: #ffffff;
+}
+
+/*
+---------------------Ajout livre-------------------
+ */
+
+.back-title {
+  padding-top: 50px;
+}
+
+.add-book-title,
+.go-back {
+  margin-left: 5%;
+}
+
+.add-book-form-section {
+  display: flex;
+  flex-direction: row;
+  margin: 5%;
+  background-color: white;
+  padding-top: 75px;
+  border-radius: 15px;
+}
+
+.add-book-pic {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  object-fit: cover;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.foto {
+  width: 450px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0;
+}
+
+.add-book-pic img {
+  width: 450px;
+  margin-left: auto;
+  margin-bottom: auto;
+  margin-right: auto;
+}
+
+.add-book-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 70%;
+  margin: auto;
+}
+
+.add-book-form input,
+.add-book-form textarea,
+.add-book-form select {
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.add-book-form label {
+  margin-bottom: 10px;
+}
+
+.add-book-form-div {
+  width: 50%;
+}
+
+.textarea-input {
+  font-size: 16px;
+  border: solid 1px #f0f0f0;
+  border-radius: 10px;
+  padding: 5px;
+  background-color: #edf2f6;
+}
+
+.gray {
+  background-color: #edf2f6;
 }
