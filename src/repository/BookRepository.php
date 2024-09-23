@@ -45,9 +45,22 @@ class BookRepository extends AbstractEntityManager
 
     }
 
+    public function findBookById(int $id) : array|false
+    {
+        $sql = <<<EOD
+                SELECT * 
+                FROM books
+                WHERE id = $id;
+                EOD;
+
+        return $this->db->query($sql)->fetch();
+    }
+
     public function addBook(Book $book) : array|null
     {
-        if ($book->getImage() !== null) {
+
+        if (isset($_FILES['picture']) && $_FILES['picture']['error'] !== UPLOAD_ERR_NO_FILE){
+
             $_FILES['picture']['type'] = finfo_file(finfo_open(FILEINFO_MIME_TYPE), $_FILES['picture']['tmp_name']);
 
             if ($_FILES['picture']['type'] !== 'image/jpeg' && ($_FILES['picture']['type'] !== ('image/png')) && $_FILES['picture']['type'] !== 'image/jpg') {
@@ -60,8 +73,7 @@ class BookRepository extends AbstractEntityManager
                 $error = $_FILES['file']['error'];
                 $errorMessages = [];
 
-                if ($error === UPLOAD_ERR_INI_SIZE || $error === UPLOAD_ERR_FORM_SIZE) {
-                }
+                if ($error === UPLOAD_ERR_INI_SIZE || $error === UPLOAD_ERR_FORM_SIZE)
                 {
                     $errorMessages[] = "Le fichier dépasse la taille maximale autorisée.";
                 }
@@ -93,14 +105,7 @@ class BookRepository extends AbstractEntityManager
                 $type = '.png';
             }
 
-            function generateRandomString($length = 10)
-            {
-                $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-                $shuffled = str_shuffle($characters);
-                return substr($shuffled, 0, $length);
-            }
-
-            $name = generateRandomString(10);
+            $name = uniqid('', false);
 
             //On sauvegarde l'image dans notre dossier d'image
             $uploadDir = dirname(__DIR__, 2) . '/books_img/';
@@ -109,16 +114,16 @@ class BookRepository extends AbstractEntityManager
 
             $book->setImage($newName);
 
-            unset($_FILES);
 
 
         } else {
             $book->setImage('default-book.png');
         }
 
+        unset($_FILES);
         //Check longueur du titre et de l'auteur
-        if (mb_strlen($book->getTitle() > 250 || mb_strlen($book->getAuthor() > 250))){
-            $errorMessages[] = 'Le titre et l\' auteur ne peuvent pas dépasser les 250 caractères?';
+        if (mb_strlen($book->getTitle()) > 250 || mb_strlen($book->getAuthor()) > 250) {
+            $errorMessages[] = 'Le titre et l\' auteur ne peuvent pas dépasser les 250 caractères.';
         }
 
         if (!empty($errorMessages)) {
@@ -137,10 +142,35 @@ class BookRepository extends AbstractEntityManager
             'description' => $book->getDescription(),
             'author' => $book->getAuthor(),
             'image' => $book->getImage(),
-            'statut' => $book->getStatut()
+            'statut' => (int)$book->getStatut()
         ]);
 
         return null;
+    }
+
+    public function deleteBookById(int $idBook, int $idUser) : void
+    {
+        $imgSql = <<<EOD
+                SELECT image
+                FROM books
+                WHERE id = $idBook
+                AND user_id = $idUser
+                EOD;
+
+        $imagePath = $this->db->query($imgSql)->fetch();
+        if ($imagePath['image'] !== 'default-book.png') {
+            $deleteDir = dirname(__DIR__, 2) . '/books_img/';
+            unlink($deleteDir . $imagePath['image']);
+        }
+
+        $findBookSQL = <<<EOD
+                        DELETE
+                        FROM books
+                        WHERE id = $idBook
+                        AND user_id = $idUser
+                        EOD;
+
+        $this->db->query($findBookSQL);
     }
 
 }

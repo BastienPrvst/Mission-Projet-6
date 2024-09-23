@@ -75,7 +75,7 @@
 
     <section class="user-books">
 
-        <a href="index.php?action=addBookForm"><button>Ajouter un livre </button></a>
+        <button class="add-book-button"><a href="index.php?action=addBookForm">Ajouter un livre </a></button>
 
 
         <?php if (!empty($userBooks))
@@ -94,22 +94,24 @@
                 <tbody>
 
                     <?php
+
                     foreach ($userBooks as $book) {?>
                         <tr>
-                            <td><img class="book-img" src="img_books/<?= htmlentities($book['image'])?>" alt=""></td>
+                            <td><img class="book-img" src="books_img/<?= htmlentities($book['image'])?>" alt=""></td>
                             <td><?= htmlentities($book["title"])?></td>
                             <td><?= htmlentities($book['author'])?></td>
                             <td><?= htmlentities($book['description'])?></td>
-                            <td><?= htmlentities($book['statut'])?></td>
-                            <td>Modifier | Supprimer</td>
+                        <?php if ($book['statut'] === 1){?>
+                            <td class="green">Disponible</td>
+                        <?php } else { ?>
+                            <td class="red">Non-Disponible</td>
+                        <?php } ?>
+                            <td><a href="index.php?action=updateBookForm&id=<?= htmlentities($book["id"])?>&userId=<?=$_SESSION['user']['id'] ?>">Modifier</a> | <a class="delete-button" href="index.php?action=deleteBook&id=<?= htmlentities($book["id"])?>&userId=<?=$_SESSION['user']['id'] ?>">Supprimer</a></td>
 
                         </tr>
-
-
-
                     <?php
                     }
-        }else{ ?>
+        } else { ?>
 
             <p>Aucun livre à afficher, commencez à en ajouter en cliquant sur le bouton + !</p>
 

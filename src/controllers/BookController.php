@@ -38,16 +38,12 @@ class BookController{
     {
         $statut = filter_var(Utils::request('disponibility'), FILTER_VALIDATE_BOOLEAN);
 
-        var_dump($_FILES);
-
-
         $book = new Book();
-        $book->setTitle($_POST['title']);
-        $book->setAuthor($_POST['author']);
-        $book->setDescription($_POST['description']);
+        $book->setTitle(Utils::request("title"));
+        $book->setAuthor(Utils::request("author"));
+        $book->setDescription(Utils::request("description"));
         $book->setUserId($_SESSION['user']['id']);
         $book->setStatut($statut);
-        $book->setImage($_POST['picture']);
         $errors = (new BookRepository())->addBook($book);
 
         if ($errors !== null) {
@@ -56,18 +52,33 @@ class BookController{
             ]);
         }
 
-        $view = new View("Mon profil");
-        $view->render('personalprofile');
-
+        Utils::redirect("personalProfile");
     }
 
     public function deleteBook() : void
     {
+        $idBook = (int)Utils::request("id");
+        $idUser = (int)Utils::request("userId");
+        if($idUser === $_SESSION['user']['id']){
+            (new BookRepository())->deleteBookById($idBook,$idUser);
+        }
+        Utils::redirect("personalProfile");
 
     }
 
-    public function updateBook() : void
+    public function updateBookForm() : void
     {
+        $idBook = (int)Utils::request("id");
+        $userId = (int)Utils::request("userId");
+        if($userId === $_SESSION['user']['id']){
 
+            $book = (new BookRepository())->findBookById($idBook);
+
+            $view = new View("Modifier un livre");
+            $view->render("updateBook",
+            ['book' => $book]);
+        } else {
+            Utils::redirect("home");
+        }
     }
 }

@@ -26,6 +26,12 @@ try {
         case 'addBookForm':
             (new BookController())->addBookForm();
             break;
+        case 'deleteBook':
+            (new BookController())->deleteBook();
+            break;
+        case 'updateBookForm':
+            (new BookController())->updateBookForm();
+            break;
         // Pages User Controller
         case 'registerForm':
             (new UserController())->registerForm();

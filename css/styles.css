@@ -389,7 +389,9 @@ footer ul li {
 }
 
 .book-img {
-  width: 75px;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
 }
 
 .user-books {
@@ -415,6 +417,30 @@ footer ul li {
 
 .user-books-table tbody tr:nth-child(even) {
   background-color: #ffffff;
+}
+
+.add-book-button {
+  background-color: white;
+  border: solid 2px #00ad6a;
+  margin-bottom: 25px;
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+.add-book-button a {
+  color: #00ad6a;
+}
+
+.delete-button {
+  color: red;
+}
+
+.red {
+  color: red;
+}
+
+.green {
+  color: #00ad6a;
 }
 
 /*
