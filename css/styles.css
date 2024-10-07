@@ -166,8 +166,10 @@ nav,
   font-size: 14px;
 }
 
-.default-book {
-  max-width: 230px;
+.home-book-img {
+  width: 230px;
+  height: 200px;
+  object-fit: cover;
 }
 
 /*
@@ -249,6 +251,45 @@ nav,
 .keur {
   position: relative;
   left: 200px;
+}
+/*
+-----------------BOOK LIST-------------------
+ */
+.book-list-header {
+  width: 75%;
+  margin: auto;
+  padding: 30px 0 30px 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bookshell {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 75%;
+  margin: auto;
+}
+
+/*
+-----------------Book Detail ---------------------
+ */
+
+.book-detail {
+  display: flex;
+  flex-direction: row;
+}
+
+.book-half-image {
+  width: 50%;
+}
+
+.book-half-image img {
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
 }
 
 /*
@@ -422,9 +463,10 @@ footer ul li {
 .add-book-button {
   background-color: white;
   border: solid 2px #00ad6a;
-  margin-bottom: 25px;
   font-weight: bold;
   border-radius: 10px;
+  width: 191px;
+  margin: 0 auto 25px;
 }
 
 .add-book-button a {

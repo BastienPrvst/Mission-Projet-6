@@ -15,7 +15,7 @@ class BookController{
 
     public function showBookList(?int $limit = 10000) : void
     {
-        $allBooks = (new BookRepository())->findBooks($limit);
+        $allBooks = (new BookRepository())->findAvailableBooks();
         $view = new View("Nos livres à l'échange");
         $view->render('bookList',
             ['books' => $allBooks]
@@ -24,8 +24,16 @@ class BookController{
 
     public function showBookDetail() : void
     {
+        $bookId = Utils::request('id');
+        $book = (new BookRepository())->findBookById($bookId);
+        $user = (new UserRepository())->getUserById($book->getUserId());
+        if (!$user){
+            Utils::redirect('bookList');
+        }
         $view = new View("Livre");
-        $view->render('bookDetail');
+        $view->render('bookDetail',
+        ['book' => $book,
+         'user' => $user]);
     }
 
     public function addBookForm() : void
@@ -81,4 +89,39 @@ class BookController{
             Utils::redirect("home");
         }
     }
+
+    public function updateBook() : void
+    {
+
+        $idBook = (int)Utils::request("id");
+
+        $book = new Book();
+
+        $book->setTitle(Utils::request("title"));
+        $book->setAuthor(Utils::request("author"));
+        $book->setDescription(Utils::request("description"));
+        $book->setStatut(Utils::request("disponibility"));
+
+        $errors = (new BookRepository())->updateBook($idBook, $book);
+
+        if (!empty($errors)){
+            Utils::redirect("updateBook", [
+                "errors" => $errors
+            ]);
+        }
+
+        Utils::redirect('personalProfile');
+
+    }
+
+    public function searchBook()
+    {
+        $keyword = Utils::request("keyword");
+        $result = (new BookRepository())->findBooksByKeyword($keyword);
+        $view = new View("Liste des livres");
+        $view->render("bookList",[
+            'result' => $result
+        ]);
+    }
+
 }

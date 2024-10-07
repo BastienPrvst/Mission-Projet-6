@@ -25,13 +25,13 @@
             <?php foreach ($lastBooks as $lastBook):?>
                 <div class="info-books">
 
-                    <img src="./img/default_image.png" class="default-book" alt="livre">
+                    <img src=".\books_img\<?= htmlentities($lastBook['image']) ?>" class="home-book-img" alt="livre">
                     <div class="detail-books">
-                        <span class="title"><?=$lastBook['title']?></span>
+                        <span class="title"><?=htmlentities($lastBook['title'])?></span>
 
-                        <span class="author"><?= $lastBook['author']?></span>
+                        <span class="author"><?= htmlentities($lastBook['author'])?></span>
 
-                        <span class="seller"> Vendu par : <?= $lastBook['pseudo']?></span>
+                        <span class="seller"> Vendu par : <?= htmlentities($lastBook['pseudo'])?></span>
                     </div>
                 </div>
 

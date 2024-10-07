@@ -19,11 +19,22 @@ class BookRepository extends AbstractEntityManager
 
         }catch (Exception $exception){
 
-            var_dump($exception->getMessage());
             exit(0);
         }
 
 
+    }
+
+    public function findAvailableBooks(): PDOStatement
+    {
+        $sql = <<<EOD
+            SELECT b.*, u.pseudo
+            FROM books b
+            INNER JOIN users u ON u.id = b.user_id
+            WHERE b.statut = 1
+            ORDER BY b.id DESC;
+            EOD;
+        return $this->db->query($sql);
     }
 
     public function findLastBooks() : PDOStatement
@@ -45,7 +56,7 @@ class BookRepository extends AbstractEntityManager
 
     }
 
-    public function findBookById(int $id) : array|false
+    public function findBookById(int $id) : ?Book
     {
         $sql = <<<EOD
                 SELECT * 
@@ -53,11 +64,111 @@ class BookRepository extends AbstractEntityManager
                 WHERE id = $id;
                 EOD;
 
-        return $this->db->query($sql)->fetch();
+        $result = $this->db->query($sql)->fetch();
+
+        if ($result !== null){
+            $book = new Book();
+            $book->setId($result['id']);
+            $book->setUserId($result['user_id']);
+            $book->setTitle($result['title']);
+            $book->setDescription($result['description']);
+            $book->setAuthor($result['author']);
+            $book->setImage($result['image']);
+            $book->setStatut($result['statut']);
+            return $book;
+        }
+
+        return null;
     }
 
     public function addBook(Book $book) : array|null
     {
+
+        $errorMessages = $this->checkFields($book);
+
+        if (!empty($errorMessages)) {
+            return $errorMessages;
+        }
+
+        if ($book->getImage() === null){
+            $book->setImage('default-book.png');
+        }
+
+        $bookSql = <<<EOD
+                INSERT INTO books
+                (user_id, title, description, author, image, statut)
+                VALUES (:user_id, :title, :description, :author, :image, :statut)
+                EOD;
+
+        $this->db->query($bookSql, [
+            'user_id' => $book->getUserId(),
+            'title' => $book->getTitle(),
+            'description' => $book->getDescription(),
+            'author' => $book->getAuthor(),
+            'image' => $book->getImage(),
+            'statut' => (int)$book->getStatut()
+        ]);
+
+        return null;
+    }
+    public function updateBook(int $id, Book $book)
+    {
+        $actualBook = $this->findBookById($id);
+        $book->setImage($actualBook->getImage());
+        $errorMessages = $this->checkFields($book);
+
+        if (!empty($errorMessages)) {
+            return $errorMessages;
+        }
+
+        $bookSql = <<<EOD
+                UPDATE books
+                SET title = :title, description = :description, author = :author, image = :image, statut = :statut
+                WHERE id = :id;
+                EOD;
+
+        $this->db->query($bookSql, [
+            'title' => $book->getTitle(),
+            'description' => $book->getDescription(),
+            'author' => $book->getAuthor(),
+            'image' => $book->getImage(),
+            'statut' => (int)$book->getStatut(),
+            'id' => $id
+        ]);
+
+        return null;
+
+    }
+    public function deleteBookById(int $idBook, int $idUser) : void
+    {
+        $imgSql = <<<EOD
+                SELECT image
+                FROM books
+                WHERE id = $idBook
+                AND user_id = $idUser
+                EOD;
+
+        $imagePath = $this->db->query($imgSql)->fetch();
+        if ($imagePath['image'] !== 'default-book.png') {
+            $deleteDir = dirname(__DIR__, 2) . '/books_img/';
+            unlink($deleteDir . $imagePath['image']);
+        }
+
+        $findBookSQL = <<<EOD
+                        DELETE
+                        FROM books
+                        WHERE id = $idBook
+                        AND user_id = $idUser
+                        EOD;
+
+        $this->db->query($findBookSQL);
+    }
+
+
+
+    private function checkFields(Book $book)
+    {
+        $errorMessages = [];
 
         if (isset($_FILES['picture']) && $_FILES['picture']['error'] !== UPLOAD_ERR_NO_FILE){
 
@@ -114,10 +225,6 @@ class BookRepository extends AbstractEntityManager
 
             $book->setImage($newName);
 
-
-
-        } else {
-            $book->setImage('default-book.png');
         }
 
         unset($_FILES);
@@ -126,51 +233,20 @@ class BookRepository extends AbstractEntityManager
             $errorMessages[] = 'Le titre et l\' auteur ne peuvent pas dépasser les 250 caractères.';
         }
 
-        if (!empty($errorMessages)) {
-            return $errorMessages;
-        }
+        return $errorMessages;
 
-        $bookSql = <<<EOD
-                INSERT INTO books
-                (user_id, title, description, author, image, statut)
-                VALUES (:user_id, :title, :description, :author, :image, :statut)
-                EOD;
-
-        $this->db->query($bookSql, [
-            'user_id' => $book->getUserId(),
-            'title' => $book->getTitle(),
-            'description' => $book->getDescription(),
-            'author' => $book->getAuthor(),
-            'image' => $book->getImage(),
-            'statut' => (int)$book->getStatut()
-        ]);
-
-        return null;
     }
 
-    public function deleteBookById(int $idBook, int $idUser) : void
+    public function findBooksByKeyword($keyword) : array
     {
-        $imgSql = <<<EOD
-                SELECT image
-                FROM books
-                WHERE id = $idBook
-                AND user_id = $idUser
+        $sql = <<<EOD
+                SELECT b.* , u.pseudo
+                FROM books b
+                INNER JOIN users u ON u.id = b.user_id
+                WHERE title LIKE :keyword
                 EOD;
 
-        $imagePath = $this->db->query($imgSql)->fetch();
-        if ($imagePath['image'] !== 'default-book.png') {
-            $deleteDir = dirname(__DIR__, 2) . '/books_img/';
-            unlink($deleteDir . $imagePath['image']);
-        }
-
-        $findBookSQL = <<<EOD
-                        DELETE
-                        FROM books
-                        WHERE id = $idBook
-                        AND user_id = $idUser
-                        EOD;
-
-        $this->db->query($findBookSQL);
+        return $this->db->query($sql, [':keyword' => "%$keyword%"])->fetchAll();
     }
 
 }

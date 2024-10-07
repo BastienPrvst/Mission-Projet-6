@@ -32,6 +32,12 @@ try {
         case 'updateBookForm':
             (new BookController())->updateBookForm();
             break;
+        case 'modifyBook':
+            (new BookController())->updateBook();
+            break;
+        case 'searchBook':
+            (new BookController())->searchBook();
+            break;
         // Pages User Controller
         case 'registerForm':
             (new UserController())->registerForm();

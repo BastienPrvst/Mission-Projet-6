@@ -60,6 +60,7 @@ class UserController
             'email' => $user->getEmail(),
             'pseudo' => $user->getPseudo(),
             'avatar' => $user->getAvatar(),
+            'creationDate' => $user->getCreationDate(),
         ];
 
         Utils::redirect("personalProfile");
@@ -105,18 +106,16 @@ class UserController
         $user->setPseudo($_SESSION['user']['pseudo']);
         $user->setEmail($_SESSION['user']['email']);
         $user->setId($_SESSION['user']['id']);
-        $user->setAvatar($_SESSION['user']['avatar']);
 
         $result = (new UserRepository())->updateUser($user, $pseudo, $email, $password);
+
 
         if ($result){
             $view = new View("Mon profil");
             $view->render('personalProfile',
                 ['errors' => $result]);
         }else{
-            $view = new View("Mon profil");
-            $view->render('personalProfile',
-                ['success' => true]);
+            Utils::redirect("personalProfile");
         }
 
     }

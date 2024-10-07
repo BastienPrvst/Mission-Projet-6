@@ -1,5 +1,7 @@
 <?php
 
+use Cassandra\Date;
+
 class UserRepository extends AbstractEntityManager
 {
 
@@ -16,12 +18,13 @@ class UserRepository extends AbstractEntityManager
 
             $hashedPassword = password_hash($password,PASSWORD_BCRYPT);
 
-            $userSql = "INSERT INTO users (pseudo, email, password, avatar) VALUES (:pseudo, :email, :password, null)";
+            $userSql = "INSERT INTO users (pseudo, email, password, avatar, creation_date) VALUES (:pseudo, :email, :password, null, :date)";
 
             $this->db->query($userSql, [
                 'pseudo' => $pseudo,
                 'email' => $email,
                 'password' => $hashedPassword,
+                'date' => date('Y-m-d')
             ]);
 
             return null;
@@ -74,7 +77,7 @@ class UserRepository extends AbstractEntityManager
             if (!preg_match("/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,4096}$/", $newPassword)){
                 $errors[] = 'Votre mot de passe doit contenir au moins 8 caractères dont une lettre et un chiffre.';
             }else{
-                $passwordToInitialize = $newPassword;
+                $passwordToInitialize = password_hash($newPassword, PASSWORD_BCRYPT) ;
             }
         }
 
@@ -88,7 +91,6 @@ class UserRepository extends AbstractEntityManager
             return $errors;
         }
 
-        $passwordToInitialize = password_hash($passwordToInitialize, PASSWORD_BCRYPT);
         $updateUser = <<<EOD
                 UPDATE users
                 SET pseudo = '$pseudoToInitialize',

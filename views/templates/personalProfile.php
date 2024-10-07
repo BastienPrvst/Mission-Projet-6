@@ -1,4 +1,5 @@
 
+
 <main class="main-profil">
     <h1 class="account">Mon compte</h1>
     <div class="flex-it">
@@ -25,16 +26,13 @@
                     <input type="submit">
 
                 </form>
-
-
-
             </div>
             <div class="user-stats">
                 <hr>
 
                 <h2><?= htmlentities($_SESSION['user']['pseudo']) ?></h2>
 
-                <p>Membre depuis XXXXX</p>
+                <p>Membre depuis le <?= date('d-m-Y', strtotime($_SESSION['user']['creationDate'])) ?></p>
 
                 <span>Bibliotheque</span>
 

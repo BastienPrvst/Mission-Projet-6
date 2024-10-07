@@ -8,7 +8,7 @@ class User extends AbstractEntity
     private string $password;
     private string $email;
     private ?string $avatar = null;
-
+    private string $creationDate;
 
     /**
      * @return int
@@ -64,6 +64,16 @@ class User extends AbstractEntity
     public function setAvatar(?string $avatar): void
     {
         $this->avatar = $avatar;
+    }
+
+    public function getCreationDate(): string
+    {
+        return $this->creationDate;
+    }
+
+    public function setCreationDate(string $creationDate): void
+    {
+        $this->creationDate = $creationDate;
     }
 
 }
