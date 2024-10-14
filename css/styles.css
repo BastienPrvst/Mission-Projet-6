@@ -288,8 +288,58 @@ nav,
 
 .book-half-image img {
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 80px);
   object-fit: cover;
+}
+
+.book-half-info {
+  margin: 40px 80px 0;
+  width: 40%;
+  max-height: calc(100vh - 80px);
+}
+
+.smol-img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.user-token a {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 30px;
+  width: 280px;
+  background-color: white;
+}
+
+.user-token a p {
+  padding-left: 25px;
+  width: auto;
+}
+
+.send-msg {
+  width: 485px;
+  margin-top: 100px;
+  padding: 20px 40px;
+  cursor: pointer;
+}
+
+.description {
+  height: 30%;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.description::-webkit-scrollbar {
+  display: none;
+}
+
+.mini {
+  width: 25px;
+  margin-left: 0;
 }
 
 /*
@@ -565,4 +615,31 @@ footer ul li {
 
 .gray {
   background-color: #edf2f6;
+}
+
+/*
+--------------------------ShowProfile-----------------
+ */
+
+.flex-main {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  background-color: #faf9f7;
+}
+
+.twenty-five,
+.seventy-five {
+  padding: 20px;
+  margin: 20px;
+  border-radius: 20px;
+  background-color: white;
+}
+
+.twenty-five {
+  width: 25%;
+}
+
+.seventy-five {
+  width: 75%;
 }

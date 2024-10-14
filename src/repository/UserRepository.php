@@ -267,6 +267,7 @@ class UserRepository extends AbstractEntityManager
             $user->setPseudo($result['pseudo']);
             $user->setAvatar($result['avatar']);
             $user->setEmail($result['email']);
+            $user->setCreationDate($result['creation_date']);
             return $user;
         }
 

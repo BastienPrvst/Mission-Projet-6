@@ -143,7 +143,32 @@ class UserController
 
     public function showUserProfile() : void
     {
+        $id = Utils::request('id');
+        $user = (new UserRepository())->getUserById($id);
+        if ($user === null){
+            Utils::redirect('home');
+        }
+        $userBooks = (new BookRepository())->findBookByUser($user);
         $view = new View("Profil d'utilisateur");
-        $view->render('userProfile');
+        $view->render('userProfile',[
+            'user' => $user,
+            'userBooks' => $userBooks,
+        ]);
+    }
+
+    public function messageUser(): void
+    {
+        $view = new View("Messagerie");
+        $view->render('messenger');
+    }
+
+    public function sendMessage() : void
+    {
+        $targetId = Utils::request("targetId");
+        $userId = $_SESSION['user']['id'];
+        $message = Utils::request("msg");
+
+        (new MessageRepository())->sendMessage($message,$userId,$targetId);
+        Utils::redirect("messageUser");
     }
 }
