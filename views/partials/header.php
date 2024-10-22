@@ -11,7 +11,7 @@
             </ul>
             <ul class="nav-ul2">
                 <?php if (isset($_SESSION['user'])) {
-                    echo '<li class="nav-li2"><a href="#"><i class="fa-regular fa-comment"></i> Messagerie</a></li>';
+                    echo '<li class="nav-li2"><a href="index.php?action=messageUser"><i class="fa-regular fa-comment"></i> Messagerie</a></li>';
                     echo '<li class="nav-li2"><a href="index.php?action=personalProfile">Mon compte</a></li>';
                     echo '<li class="nav-li2"><a href="index.php?action=logout">Déconnexion</a></li>';
                 }else{

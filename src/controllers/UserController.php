@@ -158,8 +158,56 @@ class UserController
 
     public function messageUser(): void
     {
+        $userId = $_SESSION['user']['id'];
+
+        //Toutes les conversations sur le coté
+
+        $allDistinctUserMessages = (new MessageRepository())->retrieveAllDistinctMessages($userId);
+
+        if (!empty($allDistinctUserMessages)){
+
+            foreach ($allDistinctUserMessages as &$userMessage){
+
+                $userMessage ['avatar'] = (new UserRepository())->getUserById($userMessage['other'])->getAvatar();
+
+            }
+            unset($userMessage);
+        }
+
+        //Conversation en cours
+
+        $id = Utils::request('id');
+
+        //Si jamais l'utilisateur clique juste sur "messagerie", c'est celui de la dernière conversation qui est utilisé
+
+        if ($id === null){
+            $id = $allDistinctUserMessages[0]['other'] ?? null;
+        }
+
+        if ($id !== null){
+            $user = (new UserRepository())->getUserById($id);
+
+            $userPseudo = $user?->getPseudo();
+            $userAvatar = $user?->getAvatar();
+
+            if ($id){
+                $conversation = (new MessageRepository())->retrieveConversation($id, $userId);
+                foreach ($conversation as $message){
+                    if ($message->getSendBy() === (int)$id){
+                        $message->avatar = $userAvatar;
+                    }
+                }
+            }
+        }
+
         $view = new View("Messagerie");
-        $view->render('messenger');
+        $view->render('messenger', [
+            'id' => $id ?? null,
+            'conversation' => $conversation ?? null,
+            'userPseudo' => $userPseudo,
+            'userAvatar' => $userAvatar,
+            'allDistinctUserMessages' => $allDistinctUserMessages,
+        ]);
     }
 
     public function sendMessage() : void
@@ -169,6 +217,9 @@ class UserController
         $message = Utils::request("msg");
 
         (new MessageRepository())->sendMessage($message,$userId,$targetId);
-        Utils::redirect("messageUser");
+        Utils::redirect("messageUser", [
+            "id" => $targetId,
+        ]);
     }
+
 }

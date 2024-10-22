@@ -1,6 +1,6 @@
 <?php
 
-class Messages
+#[AllowDynamicProperties] class Messages
 {
     private int $id;
     private int $sendBy;
