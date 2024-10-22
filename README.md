@@ -9,5 +9,5 @@ J'ai directement fais un dump de mon fichier SQL.
 Il ne reste plus qu'a l'importer dans votre manager de BDD
 
 Les logs du compte ayant déja du contenu :
-- email -> soutnenance@gmail.com
+- email -> soutenance@gmail.com
 - mdp -> clebon7898
