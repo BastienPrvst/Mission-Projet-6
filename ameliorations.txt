@@ -1,0 +1,9 @@
+
+
+- Ajout de confirmation de l'ancien mot de passe pour pouvoir le modifier
+- Ajout d'une fonctionnalité mot de passe perdu
+- Recherche de livre dynamique avec du JS
+- Ecraser l'image de profil précédente peu importe si jpeg ou png
+- Afficher les messages non vus ( fonction pour compter le nombre de message received_by en seen = 0)
+- Mettre une ancre en bas des messages pour afficher directement le dernier
+- Ajouter du js (lol) pour mettre la classe selectionnée sur la discution active
