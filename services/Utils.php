@@ -87,4 +87,51 @@ class Utils {
         return $_REQUEST[$variableName] ?? $defaultValue;
     }
 
+    public static function checkImage(array $file): array|null
+    {
+        //On met le vrai MIMETYPE
+        $_FILES['picture']['type'] = finfo_file(finfo_open(FILEINFO_MIME_TYPE), $_FILES['picture']['tmp_name']);
+
+        if ($file['picture']['type'] !== 'image/jpeg' && ($file['picture']['type'] !== ('image/png')) && $file['picture']['type'] !== 'image/jpg'){
+
+            $errorMessages[] = 'Le type de fichier n\'est pas valide';
+            return $errorMessages;
+        }
+
+        if (isset($file['file']) && $file['file']['error'] !== UPLOAD_ERR_OK) {
+            $error = $file['file']['error'];
+            $errorMessages = [];
+
+            if ($error === UPLOAD_ERR_INI_SIZE || $error === UPLOAD_ERR_FORM_SIZE){} {
+                $errorMessages[] = "Le fichier dépasse la taille maximale autorisée.";
+            }
+
+            if ($error === UPLOAD_ERR_PARTIAL) {
+                $errorMessages[] = "Le fichier n'a été que partiellement téléchargé.";
+            }
+
+            if ($error === UPLOAD_ERR_NO_FILE) {
+                $errorMessages[] = "Aucun fichier n'a été téléchargé.";
+            }
+
+            if ($error === UPLOAD_ERR_NO_TMP_DIR) {
+                $errorMessages[] = "Le dossier temporaire est manquant.";
+            }
+
+            if ($error === UPLOAD_ERR_CANT_WRITE) {
+                $errorMessages[] = "Échec de l'écriture du fichier sur le disque.";
+            }
+
+            if ($error === UPLOAD_ERR_EXTENSION) {
+                $errorMessages[] = "Une extension PHP a arrêté le téléchargement du fichier.";
+            }
+        }
+
+        if (!empty($errorMessages)){
+            return $errorMessages;
+        }
+
+        return null;
+    }
+
 }

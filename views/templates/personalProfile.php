@@ -30,9 +30,9 @@
             <div class="user-stats">
                 <hr>
 
-                <h2><?= htmlentities($_SESSION['user']['pseudo']) ?></h2>
+                <h2><?= htmlentities($user->getPseudo()) ?></h2>
 
-                <p>Membre depuis le <?= date('d-m-Y', strtotime($_SESSION['user']['creationDate'])) ?></p>
+                <p>Membre depuis le <?= $user->getCreationDate() ?></p>
 
                 <span>Bibliotheque</span>
 
@@ -46,7 +46,7 @@
             <div class="connexion-form info-form">
                 <form action="index.php?action=modifyProfile" method="POST">
                     <label for="user-email">Adresse email</label>
-                    <input class="text-input" id="user-email" name="user-email" type="email" value="<?= htmlentities($_SESSION['user']['email']) ?>">
+                    <input class="text-input" id="user-email" name="user-email" type="email" value="<?= htmlentities($user->getEmail()) ?>">
 
                     <label for="password">Mot de passe</label>
                     <input class="text-input" id="password" name="password" type="password"

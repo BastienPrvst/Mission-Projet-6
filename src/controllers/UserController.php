@@ -17,15 +17,22 @@ class UserController
         $email = Utils::request("register-email");
         $password = Utils::request("password");
 
-        $result = (new UserRepository())->createUser($pseudo,$email ,$password);
+        $errors = $this->checkFields($pseudo, $email, $password);
 
-        if ($result){
-            Utils::redirect('registerForm',
-            ['errors' => $result]);
-        }else{
+        // Hashage du password
+
+        if (count($errors) === 0){
+
+            $hashedPassword = password_hash($password,PASSWORD_BCRYPT);
+
+            (new UserRepository())->createUser($pseudo,$email ,$hashedPassword);
+
             Utils::redirect('loginForm',
                 ['success' => 'Votre compte à bien été crée']);
         }
+
+        Utils::redirect('registerForm',
+        ['errors' => $errors]);
     }
 
     public function logInPage() : void
@@ -91,32 +98,57 @@ class UserController
 
         $view = new View("Mon profil");
         $view->render('personalProfile',
-        ['userBooks' => $userBooks]);
+        [
+            'user' => $user,
+            'userBooks' => $userBooks
+        ]);
     }
 
     public function modifiyUserInfo() : void
     {
         //Données du form
-        $pseudo = Utils::request("user-pseudo");
-        $email = Utils::request("user-email");
-        $password = Utils::request("password");
+        $newPseudo = Utils::request("user-pseudo");
+        $newEmail = Utils::request("user-email");
+        $newPassword = Utils::request("password");
 
-        //Instanciation d'un USER avec les données de la session
-        $user = new User();
-        $user->setPseudo($_SESSION['user']['pseudo']);
-        $user->setEmail($_SESSION['user']['email']);
-        $user->setId($_SESSION['user']['id']);
+        // Recuperation valeurs actuelles
+        $id = ($_SESSION['user']['id']);
 
-        $result = (new UserRepository())->updateUser($user, $pseudo, $email, $password);
+        $user = (new UserRepository())->getUserById($id);
 
+        $pseudoToInitialize = $user->getPseudo();
+        $emailToInitialize = $user->getEmail();
+        $passwordToInitialize = (new UserRepository())->getCurrentPasswordByEmail($emailToInitialize);
+        $errors = [];
 
-        if ($result){
+        if ($newPseudo !== $pseudoToInitialize){
+            $pseudoToInitialize = $newPseudo;
+        }
+        if ($newEmail !== $emailToInitialize){
+            $emailToInitialize = $newEmail;
+        }
+        if ($newPassword && !password_verify($newPassword, $passwordToInitialize)){
+            if (!preg_match("/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,4096}$/", $newPassword)){
+                $errors[] = 'Votre mot de passe doit contenir au moins 8 caractères dont une lettre et un chiffre.';
+            }else{
+                $passwordToInitialize = password_hash($newPassword, PASSWORD_BCRYPT) ;
+            }
+        }
+
+        $validationForm = $this->checkFields($pseudoToInitialize, $emailToInitialize, $passwordToInitialize);
+
+        if ($validationForm) {
+            $errors = array_merge($errors, $validationForm);
+        }
+
+        if (!empty($errors)) {
             $view = new View("Mon profil");
             $view->render('personalProfile',
-                ['errors' => $result]);
-        }else{
-            Utils::redirect("personalProfile");
+                ['errors' => $errors]);
         }
+
+        (new UserRepository())->updateUser($id, $pseudoToInitialize, $emailToInitialize, $passwordToInitialize);
+        Utils::redirect("personalProfile");
 
     }
 
@@ -156,6 +188,9 @@ class UserController
         ]);
     }
 
+    /**
+     * @throws Exception
+     */
     public function messageUser(): void
     {
         $userId = $_SESSION['user']['id'];
@@ -190,20 +225,26 @@ class UserController
             $userPseudo = $user?->getPseudo();
             $userAvatar = $user?->getAvatar();
 
-            if ($id){
+            if ($user !== null){
                 $conversation = (new MessageRepository())->retrieveConversation($id, $userId);
-                foreach ($conversation as $message){
-                    if ($message->getSendBy() === (int)$id){
-                        $message->avatar = $userAvatar;
+                if ($conversation !== null){
+                    foreach ($conversation as $message){
+                        if ($message->getSendBy() === (int)$id){
+                            $message->avatar = $userAvatar;
+                        }
                     }
                 }
+
+            }else{
+                $conversation = null;
             }
         }
+
 
         $view = new View("Messagerie");
         $view->render('messenger', [
             'id' => $id ?? null,
-            'conversation' => $conversation ?? null,
+            'conversation' => $conversation,
             'userPseudo' => $userPseudo,
             'userAvatar' => $userAvatar,
             'allDistinctUserMessages' => $allDistinctUserMessages,
@@ -220,6 +261,49 @@ class UserController
         Utils::redirect("messageUser", [
             "id" => $targetId,
         ]);
+    }
+
+
+    public function checkFields(string $pseudo, string $email, string $password): array
+    {
+
+        $errors = [];
+        if (!empty($pseudo)
+            && !empty($email)
+            && !empty($password)){
+
+            if (empty($_SESSION['user']) || $_SESSION['user']['pseudo'] !== $pseudo){
+                if ($this->checkPseudoExists($pseudo)){
+                    $errors[] = 'Ce pseudonyme est déjà utilisé';
+                }
+            }
+
+            if (empty($_SESSION['user']) || $_SESSION['user']['email'] !== $email){
+                if ($this->checkEmailExists($email)){
+                    $errors[] = 'Cet email est déjà utilisé';
+                }
+            }
+
+            if (mb_strlen($pseudo) > 50){
+                $errors[] = 'Votre pseudonyme ne peut contenir que 50 lettres et/ou chiffres maximum.';
+            }
+
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)|| mb_strlen($email) > 200){
+                $errors[] = 'L\'adresse email renseignée n\'est pas valide';
+            }
+
+            if (empty($_SESSION['user'])){
+                if (!preg_match("/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,4096}$/", $password)){
+                    $errors[] = 'Votre mot de passe doit contenir au moins 8 caractères dont une lettre et un chiffre.';
+                }
+            }
+
+        }else{
+            $errors[] = 'Veuillez remplir tous les champs';
+        }
+
+        return $errors;
+
     }
 
 }

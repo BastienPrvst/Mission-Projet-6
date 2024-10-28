@@ -50,13 +50,13 @@ class MessageRepository extends AbstractEntityManager
 
     }
 
-    public function retrieveConversation(int $id, int $userId) : array
+    public function retrieveConversation(int $id, int $userId) : ?array
     {
         $sql = <<<EOD
                 SELECT *
                 FROM messages
-                WHERE :id IN (send_by, received_by)
-                AND :userId IN (received_by, send_by)
+                WHERE (send_by = :id AND received_by = :userId)
+                OR (send_by = :userId AND received_by = :id);
                 EOD;
 
         $messages = $this->db->query($sql,['id' => $id,'userId' => $userId])->fetchAll();
@@ -64,29 +64,34 @@ class MessageRepository extends AbstractEntityManager
         $conversation = [];
         $idToUpdate = [];
 
-        foreach ($messages as $message) {
-            $msg = new Messages();
-            $msg->setId($message['id']);
-            $msg->setText($message['text']);
-            $msg->setDate(new \DateTime($message['date']));
-            $msg->setSendBy($message['send_by']);
-            $msg->setReceivedBy($message['received_by']);
-            $msg->setSeen(true);
-            $conversation[] = $msg;
+        if (!empty($messages)) {
 
-            $idToUpdate [] = $message['id'];
+            foreach ($messages as $message) {
+                $msg = new Messages();
+                $msg->setId($message['id']);
+                $msg->setText($message['text']);
+                $msg->setDate(new \DateTime($message['date']));
+                $msg->setSendBy($message['send_by']);
+                $msg->setReceivedBy($message['received_by']);
+                $msg->setSeen(true);
+                $conversation[] = $msg;
+
+                $idToUpdate [] = $message['id'];
+            }
+
+            $idToUpdate = implode(',',$idToUpdate);
+
+            $sql = <<<EOD
+                        UPDATE messages
+                        SET seen = true
+                        WHERE id in ($idToUpdate)
+                        EOD;
+            $this->db->query($sql);
+
+            return $conversation;
         }
 
-        $idToUpdate = implode(',',$idToUpdate);
-
-        $sql = <<<EOD
-                    UPDATE messages
-                    SET seen = true
-                    WHERE id in ($idToUpdate)
-                    EOD;
-        $this->db->query($sql);
-
-        return $conversation;
+        return null;
 
     }
 }

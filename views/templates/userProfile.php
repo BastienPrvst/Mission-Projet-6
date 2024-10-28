@@ -2,24 +2,22 @@
 <main class="flex-main">
     <section class="twenty-five">
 
-        <img src="./users_img/<?=$user->getAvatar()?>" alt="">
+        <img class="big-img" src="./users_img/<?=$user->getAvatar()?>" alt="">
 
-        <p><?= htmlentities($user->getPseudo()) ?></p>
+        <hr>
+
+        <h2><?= htmlentities($user->getPseudo()) ?></h2>
         <p>Membre depuis le <?= date('d-m-Y', strtotime($user->getCreationDate())) ?></p>
-        <p><?= count($userBooks)?> livres</p>
-        <a href="#"><button class="green-button submit-button">Écrire un message</button></a>
+        <p><?= count($userBooks)?> livre(s)</p>
+        <a href="index.php?action=messageUser&id=<?=$user->getId()?>"><button class="green-button button-msg">Écrire un message</button></a>
 
 
     </section>
 
-
-
-
-
     <section class="seventy-five">
 
         <?php if (!empty($userBooks)) : ?>
-        <table>
+        <table class="user-books-table table-profil">
             <thead>
                 <tr>
                     <th>Photo</th>

@@ -22,7 +22,6 @@ class BookRepository extends AbstractEntityManager
             exit(0);
         }
 
-
     }
 
     public function findAvailableBooks(): PDOStatement
@@ -166,64 +165,32 @@ class BookRepository extends AbstractEntityManager
 
 
 
-    private function checkFields(Book $book)
+    private function checkFields(Book $book): array
     {
         $errorMessages = [];
 
         if (isset($_FILES['picture']) && $_FILES['picture']['error'] !== UPLOAD_ERR_NO_FILE){
 
-            $_FILES['picture']['type'] = finfo_file(finfo_open(FILEINFO_MIME_TYPE), $_FILES['picture']['tmp_name']);
+            $errors = Utils::checkImage($_FILES);
 
-            if ($_FILES['picture']['type'] !== 'image/jpeg' && ($_FILES['picture']['type'] !== ('image/png')) && $_FILES['picture']['type'] !== 'image/jpg') {
+            if ($errors === null) {
 
-                $errorMessages[] = 'Le type de fichier n\'est pas valide';
-                return $errorMessages;
+                if ($_FILES['picture']['type'] === 'image/jpeg' || $_FILES['picture']['type'] === 'image/jpg') {
+                    $type = '.jpeg';
+                } else {
+                    $type = '.png';
+                }
+
+                $name = uniqid('', false);
+
+                //On sauvegarde l'image dans notre dossier d'image
+                $uploadDir = dirname(__DIR__, 2) . '/books_img/';
+                $newName = $name . $type;
+                move_uploaded_file($_FILES['picture']['tmp_name'], $uploadDir . $newName);
+
+                $book->setImage($newName);
+
             }
-
-            if (isset($_FILES['file']) && $_FILES['file']['error'] !== UPLOAD_ERR_OK) {
-                $error = $_FILES['file']['error'];
-                $errorMessages = [];
-
-                if ($error === UPLOAD_ERR_INI_SIZE || $error === UPLOAD_ERR_FORM_SIZE)
-                {
-                    $errorMessages[] = "Le fichier dépasse la taille maximale autorisée.";
-                }
-
-                if ($error === UPLOAD_ERR_PARTIAL) {
-                    $errorMessages[] = "Le fichier n'a été que partiellement téléchargé.";
-                }
-
-                if ($error === UPLOAD_ERR_NO_FILE) {
-                    $errorMessages[] = "Aucun fichier n'a été téléchargé.";
-                }
-
-                if ($error === UPLOAD_ERR_NO_TMP_DIR) {
-                    $errorMessages[] = "Le dossier temporaire est manquant.";
-                }
-
-                if ($error === UPLOAD_ERR_CANT_WRITE) {
-                    $errorMessages[] = "Échec de l'écriture du fichier sur le disque.";
-                }
-
-                if ($error === UPLOAD_ERR_EXTENSION) {
-                    $errorMessages[] = "Une extension PHP a arrêté le téléchargement du fichier.";
-                }
-            }
-
-            if ($_FILES['picture']['type'] === 'image/jpeg' || $_FILES['picture']['type'] === 'image/jpg') {
-                $type = '.jpeg';
-            } else {
-                $type = '.png';
-            }
-
-            $name = uniqid('', false);
-
-            //On sauvegarde l'image dans notre dossier d'image
-            $uploadDir = dirname(__DIR__, 2) . '/books_img/';
-            $newName = $name . $type;
-            move_uploaded_file($_FILES['picture']['tmp_name'], $uploadDir . $newName);
-
-            $book->setImage($newName);
 
         }
 
